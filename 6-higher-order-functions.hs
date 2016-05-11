@@ -45,13 +45,20 @@ hoSumInts = higherOrderSum (\ a -> a)
 --  - A function to apply to each value, op :: Int -> Int
 --  - A function to apply between each value, f :: Int -> Int -> Int
 --  - A value to return in the base case when a > b, z :: Int
-higherOrderSequenceApplication :: Int -> Int -> (Int -> Int) -> (Int -> Int -> Int) -> Int
-higherOrderSequenceApplication a b op f
+higherOrderSequenceApplication :: (Int -> Int) -> (Int -> Int -> Int) -> Int -> Int ->  Int
+higherOrderSequenceApplication op f a b
     | a >= b = op a
-    | otherwise = f (op a) (higherOrderSequenceApplication (a+1) b op f)
+    | otherwise = f (op a) (higherOrderSequenceApplication op f (a+1) b)
 --Ex: higherOrderSequenceApplication 1 3 (\a -> 2*a) (+)
 --inicio=1 fim=3 == [1,2,3]; op=2*valor == [2,4,6]; f = + == 2+4+6=12
 
 -- Define a factorial method using the higherOrderSequenceAppliction
+-- Note: When first writing hOSApp, i wrote it with the parameters "a,b"
+-- at the beginning of the function. But by doing that, hoFactorial
+-- would not be able to call it, since we would have something like:
+-- hoFactorial = higherOrderSequenceApplication 1 # (\a->a) (*)
+-- where # would be the parameter that we would have to pass, but
+-- haskell would not be able to match it, since we would pass it at
+-- the end of the function call
 hoFactorial :: Int -> Int
-hoFactorial = undefined
+hoFactorial = higherOrderSequenceApplication (\a -> a) (*) 1
