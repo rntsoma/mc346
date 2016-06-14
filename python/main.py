@@ -2,15 +2,26 @@ import sys
 from myError import MyError
 from bisect import bisect_left, insort_left
 
+# Funcao que realiza a busca binaria, recebe o valor e ve se ele esta no vetor
+# tentarei adicionar a complexidade das funcoes apenas para treinar
+# Complexidade: O(lgn)
 def binarySearch(vect, x):
     i = bisect_left(vect, x)
     if i != len(vect) and vect[i] == x:
         return i
     return -1
 
+# Recebe um elemento (vetor) e Retorna a primeira coordenada do elemento,
+# no formato [a,b,c]. Ou seja, retorna b
+# Complexidade: O(1)
 def getFirstCoordinate(item):
     return item[1]
 
+# Recebe um vetor de id e o id do elemento atual.
+# Verifica se o id do elemento já está na lista. Se estiver lanca excecao
+# Se nao estiver, adiciona o id no local correto, de forma a deixar o vetor
+# ordenado ao retornar.
+# Complexidade: O(n) -> insercao domina em relacao a busca
 def checkID(lista, value):
     if(binarySearch(lista, value) == -1):
         if(lista==[]):
@@ -21,6 +32,9 @@ def checkID(lista, value):
         raise MyError("erro; Elementos com ID's repetidos")
     return lista
 
+# Le a entrada e realiza o tratamento. Lanca excecoes caso as entradas
+# estejam fora do que deveriam.
+# Complexidade: O(n^2) -> devido ao fato de chamar checkID a cada elemento de entrada
 def treatInput():
     arr = []
     arrID = []
@@ -50,6 +64,8 @@ def treatInput():
     arr=sorted(arr, key=getFirstCoordinate)
     return arr
 
+# Recebe o vetor de elementos da entrada e acha o elo
+# Complexidade: O(n)
 def findElo(arr, anterior):
     minNum=anterior[1]
     maxNum=anterior[2]
@@ -59,7 +75,6 @@ def findElo(arr, anterior):
             temp=x[2]-x[1]
             if(temp < potElo):
                 potElo=temp
-            # anterior=x
         else:
             temp=anterior[2]-x[1]
             if(abs(temp) < potElo):
@@ -71,6 +86,7 @@ def findElo(arr, anterior):
             anterior=x
     return potElo
 
+# Funcao principal
 def main():
     arr=treatInput()
     head = arr.pop(0)
