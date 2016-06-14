@@ -18,7 +18,7 @@ def checkID(lista, value):
         else:
             insort_left(lista, value)
     else:
-        raise MyError("Elementos com ID's repetidos")
+        raise MyError("erro; Elementos com ID's repetidos")
     return lista
 
 def treatInput():
@@ -31,9 +31,9 @@ def treatInput():
                 arr.append(temp)
                 arrID = checkID(arrID, temp[0])
             else:
-                raise MyError("Numero invalido de argumentos")
+                raise MyError("erro; Numero invalido de argumentos")
         except ValueError:
-            print "Entrada invalida, possiveis caracteres na entrada"
+            print "erro; Entrada invalida, possiveis caracteres na entrada"
             raise SystemExit
         except MyError as err:
             print err.str
@@ -42,12 +42,31 @@ def treatInput():
     arr=sorted(arr, key=getFirstCoordinate)
     return arr
 
-def findElo(arr):
-    pass
+def findElo(arr, anterior):
+    minNum=anterior[1]
+    maxNum=anterior[2]
+    potElo=sys.maxint
+    for x in arr:
+        if(x[1] >= minNum and x[2] <= maxNum):
+            temp=x[2]-x[1]
+            if(temp < potElo):
+                potElo=temp
+            anterior=x
+        else:
+            temp=anterior[2]-x[1]
+            if(abs(temp) < potElo):
+                potElo=temp
+            if(x[1]<minNum):
+                minNum=x[1]
+            if(x[2]>maxNum):
+                maxNum=x[2]
+            anterior=x
+    return potElo
 
 def main():
     arr=treatInput()
-    elo=findElo(arr)
+    head = arr.pop(0)
+    elo=findElo(arr, head)
     print elo
 
 main()
