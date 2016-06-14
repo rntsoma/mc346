@@ -28,6 +28,8 @@ def treatInput():
         try:
             temp = map(int, line.split())
             if(len(temp) == 3):
+                if(temp[2]<temp[1]):
+                    raise MyError("erro; segunda coordenada menor que a primeira")
                 arr.append(temp)
                 arrID = checkID(arrID, temp[0])
             else:
@@ -38,6 +40,12 @@ def treatInput():
         except MyError as err:
             print err.str
             raise SystemExit
+    try:
+        if len(arr)<=1:
+            raise MyError("erro; Colecao pequena demais")
+    except MyError as err:
+        print err.str
+        raise SystemExit
     # Sort array based on first coordinate
     arr=sorted(arr, key=getFirstCoordinate)
     return arr
