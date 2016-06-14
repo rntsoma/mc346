@@ -51,7 +51,7 @@ def findElo(arr, anterior):
             temp=x[2]-x[1]
             if(temp < potElo):
                 potElo=temp
-            anterior=x
+            # anterior=x
         else:
             temp=anterior[2]-x[1]
             if(abs(temp) < potElo):
@@ -66,7 +66,6 @@ def findElo(arr, anterior):
 def main():
     arr=treatInput()
     head = arr.pop(0)
-    elo=findElo(arr, head)
-    print elo
+    print findElo(arr, head)
 
 main()
