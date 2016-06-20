@@ -18,7 +18,7 @@ def getFirstCoordinate(item):
     return item[1]
 
 # Recebe um vetor de id e o id do elemento atual.
-# Verifica se o id do elemento já está na lista. Se estiver lanca excecao
+# Verifica se o id do elemento ja esta na lista. Se estiver lanca excecao
 # Se nao estiver, adiciona o id no local correto, de forma a deixar o vetor
 # ordenado ao retornar.
 # Complexidade: O(n) -> insercao domina em relacao a busca
